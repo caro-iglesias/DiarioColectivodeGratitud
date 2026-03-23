@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  DIARIO COLECTIVO DE GRATITUD
+  Proyecto de Humanidades Digitales por Carolina Iglesias
+  ============================================================
+  Este archivo usa tres lenguajes:
+    - HTML: estructura y contenido de la página
+    - CSS:  estilos visuales (colores, tipografía, animaciones)
+    - JS:   comportamiento e interactividad (dentro de <script>)
+  ============================================================
+-->
+<html lang="es">
+
+<!-- ==================== HEAD ====================
+  El <head> no es visible para el usuario.
+  Aquí configuramos el documento: charset, título,
+  fuentes de Google y todos los estilos CSS.
+-->
+<head>
+  <!-- Codificación de caracteres: permite tildes y ñ -->
+  <meta charset="UTF-8">
+
+  <!-- Hace que la página se vea bien en celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título que aparece en la pestaña del navegador -->
+  <title>Diario Colectivo de Gratitud 💛</title>
+
+  <!-- ---- Fuentes de Google Fonts (gratis) ----
+    Nunito: cuerpo de texto, redondeada y legible
+    Over the Rainbow: títulos, caligráfica y expresiva
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Over+the+Rainbow&display=swap" rel="stylesheet">
+
+  <!-- ==================== CSS ====================
+    Todo lo que está dentro de <style> es CSS.
+    CSS sirve para dar color, tamaño y forma a los elementos HTML.
+  -->
+  <style>
+
+    /* ---- Variables CSS ----
+      Las variables (--nombre) nos permiten definir un color
+      una sola vez y usarlo en muchos lugares.
+      Si quieres cambiar un color, solo lo cambias aquí.
+    */
+    :root {
+      --amarillo:    #FFD166;
+      --naranja:     #F4845F;
+      --coral:       #EF5B5B;
+      --verde:       #06D6A0;
+      --azul:        #118AB2;
+      --crema:       #FFF9F0;
+      --texto:       #3D2B1F;
+      --gris-suave:  #f0ece6;
+      --sombra:      rgba(0,0,0,0.12);
+    }
+
+    /* ---- Reset básico ----
+      Elimina márgenes y rellenos que cada navegador
+      agrega por defecto, para partir de cero.
+    */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ---- Estilos del cuerpo principal ---- */
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--crema);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+
+    /* ==================== NAVEGACIÓN ==================== */
+    nav {
+      background-color: var(--amarillo);
+      padding: 14px 32px;
+      display: flex;
+      gap: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px var(--sombra);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 700;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--coral);
+    }
+
+    /* ==================== HEADER ==================== */
+    header {
+      background-image: url('https://www.pnlbarcelona.com/wp-content/uploads/2018/03/gratitud.jpg');
+      background-size: cover;
+      background-position: center;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    /* Capa dorada semitransparente encima de la imagen */
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 200, 100, 0.45);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Título principal — usa Over the Rainbow */
+    header h1 {
+      font-family: 'Over the Rainbow', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #fff;
+      text-shadow: 2px 3px 6px rgba(0,0,0,0.3);
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #fff;
+      max-width: 600px;
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.25);
+    }
+
+    /* ==================== SECCIONES ==================== */
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* Títulos de sección — también usan Over the Rainbow */
+    section h2 {
+      font-family: 'Over the Rainbow', cursive;
+      font-size: 2rem;
+      color: var(--naranja);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    /* ==================== FORMULARIO ==================== */
+    .formulario-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 6px 24px var(--sombra);
+      border-top: 6px solid var(--amarillo);
+    }
+
+    .campo {
+      margin-bottom: 20px;
+    }
+
+    .campo label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--texto);
+    }
+
+    .campo input,
+    .campo textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0d8d0;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      background: var(--crema);
+      transition: border-color 0.2s;
+    }
+
+    .campo input:focus,
+    .campo textarea:focus {
+      outline: none;
+      border-color: var(--naranja);
+    }
+
+    .campo textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    .contador {
+      text-align: right;
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .contador.limite {
+      color: var(--coral);
+      font-weight: 700;
+    }
+
+    .boton {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--naranja), var(--coral));
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 8px;
+    }
+
+    .boton:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(244,132,95,0.4);
+    }
+
+    .boton:active {
+      transform: translateY(0);
+    }
+
+    /* Botón desactivado mientras guarda */
+    .boton:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ==================== MURAL ==================== */
+    .mural-vacio {
+      text-align: center;
+      color: #bbb;
+      font-size: 1.1rem;
+      padding: 40px 0;
+    }
+
+    .mural-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .tarjeta {
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: 4px 6px 16px var(--sombra);
+      animation: entrar 0.5s ease both;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @keyframes entrar {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .tarjeta .autor {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      opacity: 0.75;
+    }
+
+    .tarjeta .mensaje {
+      font-size: 1rem;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .tarjeta .fecha {
+      font-size: 0.78rem;
+      opacity: 0.6;
+      margin-top: 12px;
+    }
+
+    /* ==================== ACERCA DE ==================== */
+    .acerca-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 6px 24px var(--sombra);
+      border-top: 6px solid var(--verde);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .acerca-card ul {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .acerca-card ul li {
+      margin-bottom: 10px;
+    }
+
+    .acerca-card a {
+      color: var(--azul);
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .acerca-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==================== FOOTER ==================== */
+    footer {
+      background-color: var(--texto);
+      color: #fff;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* ==================== TOAST ==================== */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--verde);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease;
+      z-index: 999;
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 600px) {
+      .formulario-card,
+      .acerca-card {
+        padding: 24px 18px;
+      }
+      section {
+        padding: 40px 16px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ---- Barra de navegación ---- -->
+  <nav>
+    <a href="#inicio">🏠 Inicio</a>
+    <a href="#escribir">✍️ Escribir</a>
+    <a href="#mural">🖼️ Mural</a>
+    <a href="#acerca">💬 Acerca de</a>
+  </nav>
+
+  <!-- ---- Header / Portada ---- -->
+  <header id="inicio">
+    <div class="header-content">
+      <h1>Diario Colectivo de Gratitud</h1>
+      <p>Un espacio para detenerse, reflexionar y compartir algo bueno del día. Cada mensaje es un regalo para quien lo lea. 💌</p>
+    </div>
+  </header>
+
+  <!-- ==================== SECCIÓN: ESCRIBIR ==================== -->
+  <section id="escribir">
+    <h2>Escribir ✍️</h2>
+
+    <div class="formulario-card">
+
+      <div class="campo">
+        <label for="nombre">¿Cuál es tu nombre? (o cómo quieres firmar)</label>
+        <input
+          type="text"
+          id="nombre"
+          placeholder="Ej. Ana, Un@ viajero/a, Alma curiosa..."
+          maxlength="50"
+        >
+      </div>
+
+      <div class="campo">
+        <label for="mensaje">¿Por qué estás agradecid@ hoy?</label>
+        <textarea
+          id="mensaje"
+          placeholder="Escribe aquí tu mensaje de gratitud... puede ser algo grande o algo pequeño 🌻"
+          maxlength="200"
+        ></textarea>
+        <div class="contador" id="contador">0 / 200 caracteres</div>
+      </div>
+
+      <button class="boton" onclick="publicar()">
+        💛 Compartir mi gratitud
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ==================== SECCIÓN: MURAL ==================== -->
+  <section id="mural">
+    <h2>Mural 🖼️</h2>
+
+    <p class="mural-vacio" id="mural-vacio">
+      Aún no hay entradas. ¡Sé la primera persona en compartir tu gratitud! 🌟
+    </p>
+
+    <div class="mural-grid" id="mural-grid"></div>
+  </section>
+
+  <!-- ==================== SECCIÓN: ACERCA DE ==================== -->
+  <section id="acerca">
+    <h2>Acerca de 💬</h2>
+
+    <div class="acerca-card">
+
+      <p>
+        ¡Hola! Este es mi segundo microproyecto de Humanidades Digitales.
+        El <strong>Diario Colectivo de Gratitud</strong> es un espacio digital compartido
+        donde cualquier persona puede detenerse un momento y escribir algo pequeño
+        (o grande) por lo que se sienta agradecida.
+      </p>
+
+      <br>
+
+      <p><strong>Aprende más sobre los beneficios de la gratitud:</strong></p>
+
+      <ul>
+        <li>
+          🌐 <a href="https://www.unodc.org/unodc/es/listen-first/super-skills/gratitude.html" target="_blank">
+            UNODC — La gratitud como súper habilidad
+          </a>
+        </li>
+        <li>
+          🌐 <a href="https://positivepsychology.com/gratitude-appreciation/" target="_blank">
+            Positive Psychology — Gratitude and Appreciation
+          </a>
+        </li>
+        <li>
+          🌐 <a href="https://www.uclahealth.org/news/article/health-benefits-gratitude" target="_blank">
+            UCLA Health — Beneficios de la gratitud para la salud
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    Creado con 💛 por Carolina Iglesias. 2026
+  </footer>
+
+  <!-- Toast de confirmación -->
+  <div class="toast" id="toast">¡Tu gratitud fue compartida! 🌻</div>
+
+
+  <!-- ==================== JAVASCRIPT ====================
+    Usamos JSONBin.io como base de datos en internet.
+    Así todas las personas ven las mismas entradas,
+    sin importar desde qué dispositivo abran la página.
+
+    Conceptos clave:
+    - fetch()     → hace peticiones a internet
+    - GET         → leer datos (sin modificar nada)
+    - PUT         → actualizar/reemplazar datos
+    - async/await → espera la respuesta antes de continuar
+                    (como pedir un café: no lo tomas antes de que llegue ☕)
+    - try/catch   → intenta algo; si falla, atrapa el error
+  -->
+  <script>
+
+    // ====================================================
+    // CONFIGURACIÓN DE JSONBIN
+    // Tus credenciales para conectarte a la base de datos.
+    // ====================================================
+    const BIN_ID  = '69c0c7f8aa77b81da90d44cb';
+    const API_KEY = '$2a$10$smOejzL5RZ34HBU7uTKjO.YJ3MWR03BdhaBrQGTKEg.2OjpLllgrK';
+
+    // URL base para todas las peticiones a este bin
+    const URL_BIN = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+    // ====================================================
+    // COLORES DE LAS TARJETAS
+    // ====================================================
+    const coloresTarjetas = [
+      '#FFF3B0', // amarillo suave
+      '#FFD6BA', // durazno
+      '#C9F0E6', // menta
+      '#D4ECFF', // azul cielo
+      '#F9D0D0', // rosado
+      '#E8D5FF', // lavanda
+      '#D6F5C0', // verde lima
+      '#FFE4C4', // bisque cálido
+    ];
+
+    // ====================================================
+    // CARGAR ENTRADAS AL ABRIR LA PÁGINA
+    // Hace un GET a JSONBin para traer todas las entradas.
+    // "async" indica que la función hace operaciones de espera.
+    // ====================================================
+    async function cargarEntradas() {
+      try {
+        // fetch() hace la petición. "await" espera la respuesta.
+        const respuesta = await fetch(URL_BIN, {
+          headers: {
+            'X-Master-Key': API_KEY  // Clave de autenticación
+          }
+        });
+
+        // .json() convierte la respuesta en un objeto JavaScript
+        const datos = await respuesta.json();
+
+        // JSONBin guarda todo dentro de "record"
+        const entradas = datos.record.entradas || [];
+
+        // Mostramos cada entrada en el mural
+        entradas.forEach(mostrarTarjeta);
+
+        if (entradas.length > 0) {
+          document.getElementById('mural-vacio').style.display = 'none';
+        }
+
+      } catch (error) {
+        // Si algo falla, lo vemos en la consola del navegador
+        // (clic derecho → Inspeccionar → Console)
+        console.error('Error al cargar entradas:', error);
+      }
+    }
+
+    // Ejecutamos la carga al abrir la página
+    cargarEntradas();
+
+    // ====================================================
+    // CONTADOR DE CARACTERES EN VIVO
+    // ====================================================
+    const mensajeInput = document.getElementById('mensaje');
+    const contadorEl   = document.getElementById('contador');
+
+    mensajeInput.addEventListener('input', function () {
+      const total = mensajeInput.value.length;
+      contadorEl.textContent = total + ' / 200 caracteres';
+      if (total >= 180) {
+        contadorEl.classList.add('limite');
+      } else {
+        contadorEl.classList.remove('limite');
+      }
+    });
+
+    // ====================================================
+    // FUNCIÓN PUBLICAR
+    // 1. Lee los campos del formulario
+    // 2. Trae las entradas actuales de JSONBin (GET)
+    // 3. Agrega la nueva entrada al arreglo
+    // 4. Sube el arreglo actualizado a JSONBin (PUT)
+    // 5. Muestra la tarjeta en pantalla
+    // ====================================================
+    async function publicar() {
+      const nombre  = document.getElementById('nombre').value.trim();
+      const mensaje = document.getElementById('mensaje').value.trim();
+
+      if (!mensaje) {
+        alert('Por favor escribe algo antes de compartir 😊');
+        return;
+      }
+
+      // Desactivamos el botón para evitar doble clic mientras guarda
+      const boton = document.querySelector('.boton');
+      boton.disabled = true;
+      boton.textContent = 'Guardando... ⏳';
+
+      const nuevaEntrada = {
+        nombre:  nombre || 'Anónimo/a',
+        mensaje: mensaje,
+        fecha:   new Date().toLocaleDateString('es-MX', {
+          year: 'numeric', month: 'long', day: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        })
+      };
+
+      try {
+        // --- Paso 1: Leer entradas actuales ---
+        const respuestaGet = await fetch(URL_BIN, {
+          headers: { 'X-Master-Key': API_KEY }
+        });
+        const datos = await respuestaGet.json();
+        const entradas = datos.record.entradas || [];
+
+        // --- Paso 2: Agregar la nueva entrada ---
+        entradas.push(nuevaEntrada);
+
+        // --- Paso 3: Guardar en JSONBin con PUT ---
+        // PUT reemplaza todo el contenido del bin con los nuevos datos
+        await fetch(URL_BIN, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': API_KEY
+          },
+          body: JSON.stringify({ entradas }) // Convertimos el arreglo a texto JSON
+        });
+
+        // --- Paso 4: Mostrar en pantalla ---
+        mostrarTarjeta(nuevaEntrada);
+        document.getElementById('mural-vacio').style.display = 'none';
+
+        // Limpiamos el formulario
+        document.getElementById('nombre').value  = '';
+        document.getElementById('mensaje').value = '';
+        contadorEl.textContent = '0 / 200 caracteres';
+        contadorEl.classList.remove('limite');
+
+        mostrarToast();
+        document.getElementById('mural').scrollIntoView({ behavior: 'smooth' });
+
+      } catch (error) {
+        console.error('Error al guardar:', error);
+        alert('Hubo un problema al guardar tu entrada. Intenta de nuevo 😢');
+      }
+
+      // Reactivamos el botón
+      boton.disabled = false;
+      boton.textContent = '💛 Compartir mi gratitud';
+    }
+
+    // ====================================================
+    // FUNCIÓN MOSTRAR TARJETA
+    // ====================================================
+    function mostrarTarjeta(entrada) {
+      const color = coloresTarjetas[Math.floor(Math.random() * coloresTarjetas.length)];
+
+      const tarjeta = document.createElement('div');
+      tarjeta.className = 'tarjeta';
+      tarjeta.style.backgroundColor = color;
+
+      tarjeta.innerHTML = `
+        <div class="autor">✍️ ${entrada.nombre}</div>
+        <div class="mensaje">${entrada.mensaje}</div>
+        <div class="fecha">📅 ${entrada.fecha}</div>
+      `;
+
+      document.getElementById('mural-grid').prepend(tarjeta);
+    }
+
+    // ====================================================
+    // FUNCIÓN MOSTRAR TOAST
+    // ====================================================
+    function mostrarToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('visible');
+      setTimeout(function () {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+
+  </script>
+
+</body>
+</html>
